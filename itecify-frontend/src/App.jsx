@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 import AuthScreen from './AuthScreen';
 import './App.css';
 
-const socket = io('http://172.20.10.14:3000');
+const socket = io('http://localhost:3000');
 
 let widgetIdCounter = 0;
 const nextWidgetId = () => `cursor-widget-${++widgetIdCounter}`;
