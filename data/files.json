@@ -1,0 +1,11 @@
+[
+  {
+    "id": "file_1774729723599_29jsp",
+    "name": "index.js",
+    "language": "javascript",
+    "code": "// Bine ai venit la iTECify!\nconsole.log('Salut!');",
+    "createdBy": "system",
+    "createdAt": 1774729723599,
+    "history": []
+  }
+]

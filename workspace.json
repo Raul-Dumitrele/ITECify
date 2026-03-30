@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "id": "1",
+      "name": "main.js",
+      "language": "javascript",
+      "content": ""
+    },
+    {
+      "id": "1774731892542",
+      "name": "file_2.py",
+      "language": "python",
+      "content": "# iTECify Python\nprint('Salut din Python!')"
+    },
+    {
+      "id": "1774731895033",
+      "name": "file_3.js",
+      "language": "javascript",
+      "content": "// iTECify JavaScript\nconsole.log('Salut din JS!');"
+    },
+    {
+      "id": "1774731895161",
+      "name": "file_4.js",
+      "language": "javascript",
+      "content": "// iTECify JavaScript\nconsole.log('Salut din JS!');"
+    }
+  ],
+  "currentCode": "",
+  "codeHistory": []
+}

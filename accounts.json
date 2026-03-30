@@ -1,0 +1,28 @@
+{
+  "ra": {
+    "username": "ra",
+    "email": "ra",
+    "phone": "ra",
+    "password": "rara",
+    "color": "#FF6B6B"
+  },
+  "ghinea": {
+    "username": "Ghinea",
+    "email": "ghineadimi@gmail.com",
+    "phone": "0770433545",
+    "password": "asdf",
+    "color": "#F7DC6F"
+  },
+  "Ghinea": {
+    "username": "Ghinea",
+    "email": "asd",
+    "password": "asdf"
+  },
+  "raul": {
+    "username": "Raul",
+    "email": "dumitreleraulvictor@gmail.com",
+    "phone": "0746276401",
+    "password": "rara",
+    "color": "#39d0f0"
+  }
+}

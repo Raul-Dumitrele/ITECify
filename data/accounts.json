@@ -1,0 +1,22 @@
+[
+  {
+    "key": "ra",
+    "value": {
+      "username": "ra",
+      "email": "ra",
+      "phone": "ra",
+      "password": "rara",
+      "color": "#FF6B6B"
+    }
+  },
+  {
+    "key": "dimi",
+    "value": {
+      "username": "Dimi",
+      "email": "asas",
+      "phone": "asas",
+      "password": "asdf",
+      "color": "#F7DC6F"
+    }
+  }
+]

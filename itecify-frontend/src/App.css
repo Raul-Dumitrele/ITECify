@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-base:       #0a0c10;
+  --bg-surface:    #0f1117;
+  --bg-elevated:   #161b22;
+  --bg-hover:      #1c2230;
+  --border:        #21262d;
+  --border-accent: #30363d;
+  --text-primary:  #e6edf3;
+  --text-muted:    #7d8590;
+  --text-dim:      #484f58;
+  --accent-cyan:   #39d0f0;
+  --accent-green:  #3fb950;
+  --accent-red:    #f85149;
+  --accent-yellow: #d29922;
+  --accent-purple: #a78bfa;
+  --sidebar-w:     224px;
+  --header-h:      46px;
+  --ai-bar-h:      48px;
+  --terminal-h:    150px;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-ui:   'Rajdhani', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%; 
+  width: 100%; /* ← Acesta rezolvă problema cu scrollul orizontal în fullscreen */
+  overflow: hidden;
+  background: var(--bg-base); color: var(--text-primary);
+  font-family: var(--font-mono); font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── EASTER EGG: Confetti keyframes ────────────────────────── */
+@keyframes confetti-fall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes easter-pop {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes easter-fade {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  to   { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+}
+
+/* ── EASTER EGG: God Mode — bordura animată ─────────────────── */
+@keyframes god-border {
+  0%   { border-color: #a78bfa; box-shadow: 0 0 20px #a78bfa44; }
+  25%  { border-color: #39d0f0; box-shadow: 0 0 20px #39d0f044; }
+  50%  { border-color: #3fb950; box-shadow: 0 0 20px #3fb95044; }
+  75%  { border-color: #d29922; box-shadow: 0 0 20px #d2992244; }
+  100% { border-color: #a78bfa; box-shadow: 0 0 20px #a78bfa44; }
+}
+
+.god-mode {
+  animation: god-border 2s linear infinite;
+  border: 2px solid var(--accent-purple);
+  border-radius: 4px;
+}
+
+/* ── LAYOUT ─────────────────────────────────────── */
+.app-container { 
+  display: flex; 
+  height: 100vh; 
+  width: 100%; /* ← Modificat din 100vw pentru a nu ieși din ecran */
+  max-width: 100%;
+  overflow: hidden; 
+}
+
+/* ── SIDEBAR ────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w); flex-shrink: 0;
+  background: var(--bg-surface); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.sidebar-header {
+  font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted);
+  padding: 14px 16px 10px; border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+.sidebar-section-title {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-dim);
+  padding: 12px 16px 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* Badge număr useri online în sidebar */
+.online-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  background: rgba(63, 185, 80, 0.15);
+  border: 1px solid rgba(63, 185, 80, 0.4);
+  border-radius: 8px;
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  color: var(--accent-green);
+  letter-spacing: 0;
+}
+
+.file-item {
+  font-size: 12.5px; color: var(--text-primary); padding: 7px 16px;
+  cursor: pointer; border-left: 2px solid transparent;
+  transition: background .12s, color .12s;
+}
+.file-item:hover { background: var(--bg-hover); color: var(--accent-cyan); border-left-color: var(--accent-cyan); }
+
+.user-item { display: flex; align-items: center; gap: 8px; padding: 5px 16px; font-family: var(--font-ui); font-size: 12px; color: var(--text-muted); overflow: hidden; }
+.user-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.user-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; }
+
+.ai-typing-badge {
+  font-family: var(--font-mono); font-size: 10px; color: var(--accent-purple);
+  border: 1px solid var(--accent-purple); border-radius: 3px; padding: 0 4px;
+  animation: pulse-purple 1.2s ease-in-out infinite;
+}
+@keyframes pulse-purple { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.sidebar-footer { margin-top: auto; padding: 12px 16px; border-top: 1px solid var(--border); font-family: var(--font-ui); color: var(--text-muted); }
+.sidebar-footer > div:first-child { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px; color: var(--text-dim); }
+.status-online  { font-family: var(--font-mono); font-size: 12px; color: var(--accent-green); animation: pulse-green 2.4s ease-in-out infinite; }
+.status-offline { font-family: var(--font-mono); font-size: 12px; color: var(--accent-red);   animation: pulse-red   1.8s ease-in-out infinite; }
+@keyframes pulse-green { 0%,100%{opacity:1} 50%{opacity:.55} }
+@keyframes pulse-red   { 0%,100%{opacity:1} 50%{opacity:.45} }
+
+/* ── MAIN ───────────────────────────────────────── */
+.main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+/* ── HEADER ─────────────────────────────────────── */
+.workspace-header {
+  height: var(--header-h); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px; background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border); font-family: var(--font-ui); font-size: 14px; color: var(--text-muted);
+}
+.workspace-header strong { font-weight: 700; font-size: 15px; color: var(--accent-cyan); letter-spacing: .06em; text-transform: uppercase; margin-right: 4px; }
+.header-controls { display: flex; align-items: center; gap: 10px; }
+
+/* Badge useri online în header */
+.header-users-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--accent-green);
+  background: rgba(63,185,80,0.08);
+  border: 1px solid rgba(63,185,80,0.25);
+  border-radius: 20px; padding: 2px 8px;
+}
+.header-users-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-green);
+  animation: pulse-green 2s ease-in-out infinite;
+}
+
+/* Lang select */
+.lang-select {
+  background: var(--bg-base); border: 1px solid var(--border-accent); border-radius: 3px;
+  color: var(--text-muted); font-family: var(--font-ui); font-size: 13px;
+  padding: 4px 10px; cursor: pointer; outline: none; transition: border-color .15s;
+}
+.lang-select:hover { border-color: var(--accent-cyan); color: var(--text-primary); }
+
+/* Run button */
+.run-btn {
+  font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; padding: 6px 18px;
+  background: transparent; color: var(--accent-green);
+  border: 1px solid var(--accent-green); border-radius: 3px; cursor: pointer;
+  position: relative; overflow: hidden; transition: color .18s, box-shadow .18s;
+}
+.run-btn::before { content:''; position:absolute; inset:0; background:var(--accent-green); transform:scaleX(0); transform-origin:left; transition:transform .18s ease; z-index:0; }
+.run-btn:hover::before { transform:scaleX(1); }
+.run-btn:hover { color: var(--bg-base); box-shadow: 0 0 18px rgba(63,185,80,.35); }
+.run-btn:active { transform: scale(.97); }
+
+/* ── EDITOR ─────────────────────────────────────── */
+.editor-wrapper { flex: 1; overflow: hidden; position: relative; background: #0d1117; border-bottom: 1px solid var(--border); }
+
+/* ── BLOC AI NOTION-STYLE ───────────────────────── */
+.ai-block-overlay {
+  position: absolute; bottom: 16px; right: 16px; width: 400px; max-height: 60%;
+  overflow-y: auto; background: #0d0f16;
+  border: 1px solid var(--accent-purple); border-radius: 8px; z-index: 200;
+  animation: slide-in .22s cubic-bezier(.16,1,.3,1);
+  box-shadow: 0 0 0 1px rgba(167,139,250,.15), 0 12px 40px rgba(0,0,0,.6);
+}
+@keyframes slide-in { from{opacity:0;transform:translateY(12px) scale(.97)} to{opacity:1;transform:none} }
+
+.ai-block-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px 6px; border-bottom: 1px solid rgba(167,139,250,.2);
+}
+.ai-block-label { font-family: var(--font-ui); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); }
+
+.ai-block-code {
+  padding: 12px 14px; font-family: var(--font-mono); font-size: 12.5px;
+  line-height: 1.7; color: #e2d9f3; white-space: pre-wrap; word-break: break-word;
+  border-left: 3px solid var(--accent-purple);
+}
+
+/* ── AI BAR ─────────────────────────────────────── */
+.ai-bar {
+  height: var(--ai-bar-h); flex-shrink: 0;
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 14px; background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
+.ai-bar-icon { font-size: 16px; flex-shrink: 0; }
+.ai-bar-input {
+  flex: 1; background: var(--bg-base); border: 1px solid var(--border-accent);
+  border-radius: 4px; color: var(--text-primary); font-family: var(--font-mono);
+  font-size: 12.5px; padding: 6px 12px; outline: none; transition: border-color .15s;
+}
+.ai-bar-input:focus { border-color: var(--accent-purple); }
+.ai-bar-input::placeholder { color: var(--text-dim); }
+.ai-bar-input:disabled { opacity: .5; cursor: not-allowed; }
+.ai-bar-btn {
+  font-family: var(--font-ui); font-size: 13px; font-weight: 700;
+  letter-spacing: .06em; padding: 6px 16px;
+  background: transparent; color: var(--accent-purple);
+  border: 1px solid var(--accent-purple); border-radius: 4px; cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.ai-bar-btn:hover:not(:disabled) { background: var(--accent-purple); color: var(--bg-base); }
+.ai-bar-btn:disabled { opacity: .5; cursor: not-allowed; }
+.ai-bar-btn--loading { animation: pulse-purple 1s ease-in-out infinite; }
+
+/* ── BUTOANE AI ─────────────────────────────────── */
+.btn-accept {
+  flex: 1; font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase; padding: 7px 0;
+  background: rgba(63,185,80,.1); color: var(--accent-green);
+  border: 1px solid rgba(63,185,80,.4); border-radius: 4px; cursor: pointer; transition: background .15s;
+}
+.btn-accept:hover { background: rgba(63,185,80,.22); }
+
+.btn-refuse {
+  flex: 1; font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase; padding: 7px 0;
+  background: rgba(248,81,73,.08); color: var(--accent-red);
+  border: 1px solid rgba(248,81,73,.35); border-radius: 4px; cursor: pointer; transition: background .15s;
+}
+.btn-refuse:hover { background: rgba(248,81,73,.18); }
+
+/* ── TERMINAL ───────────────────────────────────── */
+.terminal-section { height: var(--terminal-h); flex-shrink: 0; display: flex; flex-direction: column; background: var(--bg-base); }
+.terminal-header {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--accent-yellow);
+  padding: 6px 16px; background: var(--bg-surface);
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.terminal-header::before {
+  content:''; display:inline-block; width:7px; height:7px; border-radius:50%;
+  background: var(--accent-yellow); animation: blink 1.2s step-start infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.terminal-content {
+  flex: 1; overflow-y: auto; padding: 10px 16px;
+  font-family: var(--font-mono); font-size: 12.5px; line-height: 1.7;
+  color: var(--accent-green); white-space: pre-wrap; word-break: break-all;
+  scrollbar-width: thin; scrollbar-color: var(--border-accent) transparent;
+}
+/* Re-specificăm excepții la scrollbar ca să nu le moștenească pe cele negre global dacă nu trebuie */
+.terminal-content::-webkit-scrollbar { width: 4px; }
+.terminal-content::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 2px; }
+
+/* ── LOGIN ─────────────────────────────────────── */
+.login-overlay {
+  position: fixed; inset: 0; background: var(--bg-base);
+  display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.login-box {
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  padding: 48px 52px; background: var(--bg-surface);
+  border: 1px solid var(--border-accent); border-radius: 8px; width: 360px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+.login-logo { font-family: var(--font-ui); font-size: 32px; font-weight: 700; letter-spacing: .08em; color: var(--accent-cyan); }
+.login-subtitle { font-family: var(--font-ui); font-size: 13px; color: var(--text-muted); text-align: center; }
+.login-input {
+  width: 100%; padding: 10px 14px; background: var(--bg-elevated);
+  border: 1px solid var(--border-accent); border-radius: 4px;
+  color: var(--text-primary); font-family: var(--font-mono); font-size: 13px; outline: none;
+  transition: border-color .15s;
+}
+.login-input:focus { border-color: var(--accent-cyan); box-shadow: 0 0 0 2px rgba(57,208,240,.12); }
+.login-input::placeholder { color: var(--text-dim); }
+.login-btn {
+  width: 100%; padding: 10px; background: transparent;
+  border: 1px solid var(--accent-cyan); border-radius: 4px;
+  color: var(--accent-cyan); font-family: var(--font-ui); font-size: 14px;
+  font-weight: 600; letter-spacing: .06em; cursor: pointer;
+  transition: background .15s, color .15s, box-shadow .15s;
+}
+.login-btn:hover { background: var(--accent-cyan); color: var(--bg-base); box-shadow: 0 0 20px rgba(57,208,240,.3); }
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media (max-width: 640px) {
+  :root { --sidebar-w: 48px; }
+  .sidebar-header, .sidebar-section-title, .file-item, .user-name, .sidebar-footer > div:first-child { display: none; }
+  .header-users-badge { display: none; }
+}
+
+/* ── SCROLLBAR NEGRU CUSTOM ─────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base, #0a0c10); 
+}
+::-webkit-scrollbar-thumb {
+  background: #000000; 
+  border-radius: 4px;
+  border: 1px solid var(--border-accent, #30363d); 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #111111; 
+}

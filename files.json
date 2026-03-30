@@ -1,0 +1,60 @@
+[
+  {
+    "id": "1",
+    "name": "C++.cpp",
+    "language": "cpp",
+    "content": "#include <iostream>\nint sum(int a, int b) {\n    return a + b;\n}\n\nint main() {\n    std::cout << \"Salut din C++!\" << std::endl;\n    return 0;\n}\n",
+    "history": []
+  },
+  {
+    "id": "1774732746508",
+    "name": "Java.java",
+    "language": "java",
+    "content": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Salut din Java!\");\n    }\n}",
+    "history": [
+      {
+        "timestamp": 1774783227454,
+        "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Salut din Java!\");\n    }\n}",
+        "author": "ra"
+      }
+    ]
+  },
+  {
+    "id": "1774732750113",
+    "name": "Python.py",
+    "language": "python",
+    "content": "# iTECify Python\nprint('Salut din Python!')\n\n\n\n\n\n\n\n",
+    "history": [
+      {
+        "timestamp": 1774787110667,
+        "code": "# iTECify Python\nprint('Salut din Python!')\n\n\n\n\n\n\n\n",
+        "author": "Raul"
+      },
+      {
+        "timestamp": 1774787116136,
+        "code": "# iTECify Python\nprint('Salut din Python!')\n\n\ndef sum_function(a, b):\n    sum = a + b\n    print(sum)\n    return sum\n\nsum_function(5, 7)\n\n\n\n\n\n",
+        "author": "Raul"
+      }
+    ]
+  },
+  {
+    "id": "1774732755082",
+    "name": "Rust.rs",
+    "language": "rust",
+    "content": "// iTECify Rust\nfn main() {\n    println!(\"Salut din Rust!\");\n}",
+    "history": [
+      {
+        "timestamp": 1774773821372,
+        "code": "// iTECify Rust\nfn main() {\n    println!(\"Salut din Rust!\");\n}",
+        "author": "ra"
+      }
+    ]
+  },
+  {
+    "id": "1774775183617",
+    "name": "JS.java",
+    "language": "java",
+    "content": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Salut din Java!\");\n    }\n}",
+    "history": []
+  }
+]
